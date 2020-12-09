@@ -13,7 +13,7 @@
     "frontend": "npm run start --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run start --prefix client\""
   },
-  "author": "John ahn",
+  "author": "shab",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
@@ -27,6 +27,7 @@
     "mongoose": "^5.4.20",
     "react-redux": "^5.0.7",
     "saslprep": "^1.0.3",
+    "styled-components": "^5.2.1",
     "supports-color": "^7.1.0"
   },
   "devDependencies": {
