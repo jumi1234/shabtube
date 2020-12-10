@@ -3,6 +3,7 @@ import { Typography, Button, Form, message, Input, Icon } from 'antd';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
 import Axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const { TextArea } = Input;
 const { Title } = Typography;
@@ -36,7 +37,8 @@ const ThumbDiv = styled.div`
 
 `;
 
-function VideoUploadPage() {
+function VideoUploadPage(props) {
+  const user = useSelector(state => state.user)     // redux에서 user 데이터 가져옴
   const [VideoTitle, setVideoTitle] = useState("")
   const [Description, setDescription] = useState("")
   const [Private, setPrivate] = useState(0)
@@ -96,12 +98,39 @@ function VideoUploadPage() {
       })
   }
 
+  const onSubmit = (e) => {
+     // 원래 클릭 시 발생하는 이벤트 방지
+
+    const variables = {
+      writer: user.userData._id,
+      title: VideoTitle,
+      description: Description,
+      privacy: Private,
+      filePath: FilePath,
+      category: Category,
+      duration: Duration,
+      thumbnail: ThumbnailPath,
+    }
+
+    Axios.post('/api/video/uploadVideo', variables)
+      .then(response => {
+        if(response.data.success) {
+          message.success('성공적으로 업로드를 했습니다')
+          setTimeout(() => {
+            props.history.push('/')       // 3초 후 메인으로 이동
+          }, 3000)
+        } else {
+          alert('비디오 업로드에 실패했습니다')
+        }
+      })
+  }
+
   return (
     <VideoTemplate>
       <TitleDiv>
         <Title level={2}>Upload Video</Title>
       </TitleDiv>
-      <Form onSubmit>
+      <Form onSubmit={onSubmit}>
         <DropDiv>
           <Dropzone onDrop={onDrop} multiple={false} maxSize={10000000000}>
           {({ getRootProps, getInputProps }) => (
@@ -153,7 +182,7 @@ function VideoUploadPage() {
 
         <br />
         <br />
-        <Button type="primary" size="large" onClick>
+        <Button type="primary" size="large" onClick={onSubmit}>
           Submit
         </Button>
       </Form>
