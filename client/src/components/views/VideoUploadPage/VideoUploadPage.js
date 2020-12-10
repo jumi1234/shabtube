@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Button, Form, message, Input, Icon } from 'antd';
 import styled from 'styled-components';
 import Dropzone from 'react-dropzone';
+import Axios from 'axios';
 
 const { TextArea } = Input;
 const { Title } = Typography;
@@ -21,6 +22,7 @@ const CategoryOptions = [
 const VideoTemplate = styled.div`
   maxWidth: 700px;
   margin: 2rem auto;
+  padding: 50px 100px;
 `;
 const TitleDiv = styled.div`
   textAlign: center;
@@ -39,6 +41,9 @@ function VideoUploadPage() {
   const [Description, setDescription] = useState("")
   const [Private, setPrivate] = useState(0)
   const [Category, setCategory] = useState(" Film & Animation ")
+  const [FilePath, setFilePath] = useState("")
+  const [Duration, setDuration] = useState("")
+  const [ThumbnailPath, setThumbnailPath] = useState("")
 
   const onTitleChange = (e) => {
     setVideoTitle(e.currentTarget.value)
@@ -56,6 +61,41 @@ function VideoUploadPage() {
     setCategory(e.currentTarget.value)
   }
 
+  const onDrop = (files) => {
+    let formData = new FormData;
+    const config = {
+      header: {'content-type': 'multipart/form-data'}
+    }
+    formData.append("file", files[0])
+
+    Axios.post('/api/video/uploadfiles', formData, config)
+      .then(response => {
+        if(response.data.success) {
+          console.log(response.data);
+
+          let variable = {
+            filePath: response.data.filePath,
+            fileName: response.data.fileName
+          }
+
+          setFilePath(response.data.filePath)
+
+          Axios.post('/api/video/thumbnail', variable)
+            .then(response => {
+              if(response.data.success) {
+                setDuration(response.data.fileDuration)
+                setThumbnailPath(response.data.thumbsFilePath)
+              } else {
+                alert('썸네일 생성에 실패했습니다')
+              }
+            })
+        } else {
+          alert('비디오 업로드에 실패했습니다')
+        }
+
+      })
+  }
+
   return (
     <VideoTemplate>
       <TitleDiv>
@@ -63,7 +103,7 @@ function VideoUploadPage() {
       </TitleDiv>
       <Form onSubmit>
         <DropDiv>
-          <Dropzone onDrop multiple maxSize>
+          <Dropzone onDrop={onDrop} multiple={false} maxSize={10000000000}>
           {({ getRootProps, getInputProps }) => (
             <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               {...getRootProps()}>
@@ -71,11 +111,14 @@ function VideoUploadPage() {
               <Icon type="plus" style={{ fontSize: '3rem' }} />
             </div>
           )}
-
           </Dropzone>
-          <ThumbDiv>
-            <img src alt />
-          </ThumbDiv>
+
+          {ThumbnailPath &&           // ThumbnailPath 있을 때만 ThumbDiv 영역 렌더링
+            <ThumbDiv>
+              <img src={`http://localhost:5000/${ThumbnailPath}`} alt="thumbnail" />
+            </ThumbDiv>
+          }
+
         </DropDiv>
 
         <br />
