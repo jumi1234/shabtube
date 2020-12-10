@@ -90,13 +90,21 @@ router.post("/uploadVideo", (req, res) => {
   // 비디오 정보들을 저장
   const video = new Video(req.body)
 
-  video.save((err, doc) => {
+  video.save((err, doc) => {        // mongoDB에 저장
     if(err) return res.json({ success: false, err })
     return res.status(200).json({ success: true })
   })
 })
 
-
+router.get("/getVideos", (req, res) => {
+  // 비디오를 DB에서 가져와서 클라이언트에 보낸다
+  Video.find()
+    .populate('writer')     // writer의 모든 정보 가져오려면 populate() 사용
+    .exec((err, videos) => {
+      if(err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos })
+    })
+})
 
 
 
