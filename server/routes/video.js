@@ -106,6 +106,15 @@ router.get("/getVideos", (req, res) => {
     })
 })
 
+router.post("/getVideoDetail", (req, res) => {
+  Video.findOne({ "_id": req.body.videoId })
+    .populate('writer')     // writer의 id뿐 아니라 모든 정보 가져옴
+    .exec((err, videoDetail) => {
+      if(err) return res.status(400).send(err)
+      return res.status(200).json({ success: true, videoDetail })
+    })
+})
+
 
 
 module.exports = router;
