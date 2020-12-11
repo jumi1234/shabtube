@@ -14,8 +14,8 @@ router.post('/subscribeNumber', (req, res) => {
     })
 })
 
-router.post('/subscribed', (req, res) => {
-  Subscribe.find({ "userTo": req.body.userTo, "userFrom": req.body.userFrom })
+router.post('/subscribe', (req, res) => {
+  Subscriber.find({ "userTo": req.body.userTo, "userFrom": req.body.userFrom })
     .exec((err, subscribe) => {
       if(err) return res.status(400).send(err)
       let result = false
@@ -24,6 +24,23 @@ router.post('/subscribed', (req, res) => {
       }
       res.status(200).send({ success: true, subscribed: result })
     })
+})
+
+router.post('/unSubscribe', (req, res) => {
+  Subscriber.findOneAndDelete({ "userTo": req.body.userTo, "userFrom": req.body.userFrom })
+    .exec((err, doc) => {
+      if(err) return res.status(400).send({ success: false, err })
+      return res.status(200).send({ success: true, doc })
+    })
+})
+
+router.post('/subscribed', (req, res) => {
+  const subscribe = new Subscriber(req.body)
+
+  subscribe.save((err, doc) => {
+    if(err) return res.status(400).send({ success: false, err })
+    return res.status(200).send({ success: true, doc })
+  })
 })
 
 module.exports = router;

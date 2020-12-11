@@ -40,7 +40,7 @@ function VideoDetailPage(props) {
           <DetailTemplate>
             <video src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
 
-            <List.Item actions={[<Subscribe userTo={VideoDetail.writer.name} />]}>
+            <List.Item actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>]}>
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.writer.name}
@@ -61,4 +61,4 @@ function VideoDetailPage(props) {
   }
 }
 
-export default VideoDetailPage
+export default VideoDetailPage;

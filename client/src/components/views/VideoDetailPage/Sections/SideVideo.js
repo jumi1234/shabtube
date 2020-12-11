@@ -57,7 +57,7 @@ function SideVideo() {
             </a>
           </div>
           <div>
-            <a href>
+            <a>
               <span>{video.title}</span>
               <br />
               <span>{video.writer.name}</span>
