@@ -21,17 +21,17 @@ const CategoryOptions = [
 ]
 
 const VideoTemplate = styled.div`
-  maxWidth: 700px;
+  max-width: 700px;
   margin: 2rem auto;
   padding: 50px 100px;
 `;
 const TitleDiv = styled.div`
   textAlign: center;
-  marginBottom: 2rem;
+  margin-bottom: 2rem;
 `;
 const DropDiv = styled.div`
   display: flex;
-  justifyContent: space-between;
+  justify-content: space-between;
 `;
 const ThumbDiv = styled.div`
 

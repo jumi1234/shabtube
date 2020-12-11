@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, List, Avatar } from 'antd';
 import styled from 'styled-components';
 import Axios from 'axios';
+import SideVideo from './Sections/SideVideo';
 
 const DetailTemplate = styled.div`
   width: 100%;
@@ -48,7 +49,7 @@ function VideoDetailPage(props) {
           </DetailTemplate>
         </Col>
         <Col lg={6} xs={24}>
-
+          <SideVideo />
         </Col>
       </Row>
     )
