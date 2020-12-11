@@ -1,6 +1,5 @@
 # NODE + REACT YOUTUBE CLONE PROJECT 📺 
 
----
  &nbsp;
 ### DESCRIPTION 📄
 Node + React + MongoDB   
