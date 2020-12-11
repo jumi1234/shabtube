@@ -3,6 +3,7 @@ import { Row, Col, List, Avatar } from 'antd';
 import styled from 'styled-components';
 import Axios from 'axios';
 import SideVideo from './Sections/SideVideo';
+import Subscribe from './Sections/Subscribe';
 
 const DetailTemplate = styled.div`
   width: 100%;
@@ -39,7 +40,7 @@ function VideoDetailPage(props) {
           <DetailTemplate>
             <video src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
 
-            <List.Item>
+            <List.Item actions={[<Subscribe userTo={VideoDetail.writer.name} />]}>
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.writer.name}
