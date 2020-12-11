@@ -2,7 +2,8 @@
 
 
 ### DESCRIPTION 📄
-Node + React + MongoDB   
+#### MERN STACK
+MongoDB, Express, React, Node
 YOUTUBE CLONE WEB 
 
  &nbsp;
