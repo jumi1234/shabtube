@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Video } = require("../models/Video");
+const { Subscriber } = require("../models/Subscriber");
 
 const {
   auth
@@ -110,11 +111,34 @@ router.post("/getVideoDetail", (req, res) => {
   Video.findOne({ "_id": req.body.videoId })
     .populate('writer')     // writer의 id뿐 아니라 모든 정보 가져옴
     .exec((err, videoDetail) => {
-      if(err) return res.status(400).send(err)
+      if(err) return res.status(400).send(err);
       return res.status(200).json({ success: true, videoDetail })
     })
 })
 
+router.post("/getSubscriptionVideos", (req, res) => {
 
+  // 자신의 id를 가지고 구독하는 사람들을 찾는다
+
+  Subscriber.find({ 'userFrom': req.body.userFrom })
+    .exec((err, subscriberInfo) => {
+      if(err) return res.status(400).send(err);
+
+      let subsribedUser = [];
+
+      subscriberInfo.map((subscriber, i) => {
+        subsribedUser.push(subscriber.userTo);
+      })
+
+  // 찾은 사람들의 비디오를 가지고 온다
+
+    Video.find({ writer: { $in: subsribedUser } })      // 지정된 `배열`의 값과 일치하는 항목을 하나 이상 보유하는 데이터를 가져올 때 사용
+      .populate('writer')
+      .exec((err, videos) => {
+        if(err) return res.status(400).send(err);
+        res.status(200).send({ success: true, videos })
+      })
+    })
+});
 
 module.exports = router;

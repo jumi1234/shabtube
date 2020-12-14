@@ -14,7 +14,7 @@ const SubscribeTemplate = styled.div`
   }
 `;
 
-function Subscribe(props) {
+function Subscriber(props) {
 
   const [SubscribeNumber, setSubscribeNumber] = useState(0)
   const [Subscribed, setSubscribed] = useState(false)
@@ -81,4 +81,4 @@ function Subscribe(props) {
   )
 }
 
-export default Subscribe;
+export default Subscriber;
