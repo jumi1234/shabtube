@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Axios from 'axios';
 import SideVideo from './Sections/SideVideo';
 import Subscriber from './Sections/Subscriber';
+import Comment from './Sections/Comment';
 
 const DetailTemplate = styled.div`
   width: 100%;
@@ -21,6 +22,7 @@ function VideoDetailPage(props) {
   const variable = { videoId: videoId }
 
   const [VideoDetail, setVideoDetail] = useState([])
+  const [Comments, setComments] = useState([])
 
   useEffect(() => {
     Axios.post('/api/video/getVideoDetail', variable)
@@ -31,7 +33,21 @@ function VideoDetailPage(props) {
           alert('비디오 정보를 가져오는 것을 실패했습니다')
         }
       })
+
+      Axios.post('/api/comment/getComment', variable)
+        .then(response => {
+          if(response.data.success) {
+            console.log(response.data.comments);
+            setComments(response.data.comments)
+          } else {
+            alert('댓글 정보를 가져오는 것을 실패했습니다')
+          }
+        })
   }, [])
+
+  const refreshFunction = (newComment) => {
+    setComments(Comments.concat(newComment))      // concat() 메서드는 인자로 주어진 배열이나 값들을 기존 배열에 합쳐서 새 배열을 반환
+  }
 
   if(VideoDetail.writer) {
 
@@ -48,6 +64,8 @@ function VideoDetailPage(props) {
                 title={VideoDetail.writer.name}
                 description={VideoDetail.description} />
             </List.Item>
+
+            <Comment refreshFunction={refreshFunction} CommentLists={Comments} postId={videoId} />
 
           </DetailTemplate>
         </Col>
