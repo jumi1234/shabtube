@@ -55,7 +55,7 @@ function Comment(props) {
       <hr />
       {props.CommentLists && props.CommentLists.map((comment, index) => (
         (!comment.responseTo &&       // 대댓글이 아닌 코멘트만 출력
-        <React.Fragment>
+        <React.Fragment key={index}>
           <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId} />
           <ReplyComment parentCommentId={comment._id} postId={videoId} commentLists={props.CommentLists} refreshFunction={props.refreshFunction} />
         </React.Fragment>

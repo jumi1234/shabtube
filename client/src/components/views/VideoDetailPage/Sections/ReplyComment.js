@@ -25,7 +25,7 @@ function ReplyComment(props) {
     })
 
     setChildCommentNumber(commentNumber)
-  }, [props.commentLists])
+  }, [props.commentLists])        // props.commentLists가 바뀔 때마다 실행
 
   const onHandleChange = () => {
     setOpenReplyComment(!OpenReplyComment)
@@ -33,7 +33,7 @@ function ReplyComment(props) {
 
   let renderReplyComment = (parentCommentId) =>
     props.commentLists.map((comment, index) => (
-        <React.Fragment>
+        <React.Fragment key={index}>
             {
             comment.responseTo === parentCommentId &&
             <div style={{ width: '80%', marginLeft: '40px'}}>

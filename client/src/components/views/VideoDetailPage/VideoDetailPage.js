@@ -5,13 +5,14 @@ import Axios from 'axios';
 import SideVideo from './Sections/SideVideo';
 import Subscriber from './Sections/Subscriber';
 import Comment from './Sections/Comment';
+import LikeDislikes from './Sections/LikeDislikes';
 
 const DetailTemplate = styled.div`
   width: 100%;
   padding: 3rem 4rem;
 
   video {
-    width: 1000px;
+    width: 100%;
     height: 500px;
   }
 `;
@@ -59,7 +60,7 @@ function VideoDetailPage(props) {
           <DetailTemplate>
             <video src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
 
-            <List.Item actions={[ subscribeButton ]}>
+            <List.Item actions={[ <LikeDislikes video userId={localStorage.getItem('userId')} videoId={videoId} />, subscribeButton ]}>
               <List.Item.Meta
                 avatar={<Avatar src={VideoDetail.writer.image} />}
                 title={VideoDetail.writer.name}
