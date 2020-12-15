@@ -48,6 +48,7 @@ function SingleComment(props) {
         if(response.data.success) {
           console.log(response.data.result)
           setcommentValue("")
+          setOpenReply(false)
           props.refreshFunction(response.data.result)
         } else {
           alert('코멘트를 저장하지 못 했습니다')
@@ -68,14 +69,14 @@ function SingleComment(props) {
         content={<p>{props.comment.content}</p>}
       />
       {OpenReply &&
-      <form onSubmit>
+      <form onSubmit={onSubmit}>
         <textarea
           onChange={onHandleChange}
           value={commentValue}
           placeholder="코멘트를 작성해 주세요"
         />
         <br />
-        <button onClick>Submit</button>
+        <button onClick={onSubmit}>Submit</button>
       </form>
       }
     </SingleCommentTemplate>

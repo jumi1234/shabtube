@@ -47,6 +47,7 @@ function VideoDetailPage(props) {
 
   const refreshFunction = (newComment) => {
     setComments(Comments.concat(newComment))      // concat() 메서드는 인자로 주어진 배열이나 값들을 기존 배열에 합쳐서 새 배열을 반환
+                                                  // Comment.js에서 새 코멘트 저정할 때 그 배열을 가져와서 업데이트
   }
 
   if(VideoDetail.writer) {
