@@ -24,6 +24,13 @@ const SideTemplate = styled.div`
             color: gray;
           }
         }
+        &:last-child {
+          background-color: rgba(17, 17, 17, 0.8);
+          opacity: 0.8;
+          color: white !important;
+          padding: 1px 1px;
+          border-radius: 2px;
+        }
       }
     }
   }

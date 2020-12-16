@@ -18,7 +18,7 @@ function NavBar() {
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div className="menu__logo">
-        <a href="/" style={{}}>Shabtube</a>
+        <a href="/" style={{color: 'black', fontWeight: 'bold', fontSize: '16px', display: 'flex'}}><img src="../shabtube.ico" style={{width: '24px'}} />Shabtube</a>
       </div>
       <div className="menu__container">
         <div className="menu_left">
