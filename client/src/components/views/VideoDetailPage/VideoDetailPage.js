@@ -13,7 +13,7 @@ const DetailTemplate = styled.div`
 
   video {
     width: 100%;
-    height: 500px;
+    max-height: 500px;
   }
 `;
 
@@ -72,7 +72,7 @@ function VideoDetailPage(props) {
           </DetailTemplate>
         </Col>
         <Col lg={6} xs={24}>
-          <SideVideo />
+          <SideVideo videoId={videoId} />
         </Col>
       </Row>
     )

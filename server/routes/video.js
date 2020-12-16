@@ -141,4 +141,16 @@ router.post("/getSubscriptionVideos", (req, res) => {
     })
 });
 
+router.post('/upViews', (req, res) => {
+
+  const id = req.body.id
+
+  Video.findByIdAndUpdate(id, { views: req.body.views })
+    .exec((err) => {
+      if(err) return res.status(400).send(err)
+      res.status(200).json({ success: true })
+    })
+
+})
+
 module.exports = router;

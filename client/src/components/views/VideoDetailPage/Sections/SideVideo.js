@@ -29,7 +29,7 @@ const SideTemplate = styled.div`
   }
 `;
 
-function SideVideo() {
+function SideVideo(props) {
 
   const [SideVideos, setSideVideos] = useState([])
 
@@ -50,9 +50,20 @@ function SideVideo() {
     var minutes = Math.floor(video.duration / 60);
     var seconds = Math.floor(video.duration - minutes * 60);
 
+    const upViews = () => {
+      const variables = { id: video._id, views: video.views + 1 }
+      Axios.post('/api/video/upViews', variables)
+        .then(response => {
+          if(response.data.success) {
+          } else {
+            alert('조회수 증가에 실패했습니다')
+          }
+        })
+    }
+
     return <SideTemplate key={index}>
           <div>
-            <a>
+            <a href={`/video/${props.videoId}`} onClick={upViews}>
               <img src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
             </a>
           </div>
