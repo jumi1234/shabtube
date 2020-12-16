@@ -6,6 +6,7 @@ import SideVideo from './Sections/SideVideo';
 import Subscriber from './Sections/Subscriber';
 import Comment from './Sections/Comment';
 import LikeDislikes from './Sections/LikeDislikes';
+import Ratio from 'react-ratio';
 
 const DetailTemplate = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const DetailTemplate = styled.div`
 
   video {
     width: 100%;
-    max-height: 500px;
+    height: 100%;
   }
 `;
 
@@ -55,10 +56,12 @@ function VideoDetailPage(props) {
 
     const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscriber userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')} />
     return (
-      <Row gutter={[16, 16]}>
+      <Row>
         <Col lg={18} xs={24}>
           <DetailTemplate>
-            <video src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
+            <Ratio ratio={ 16 / 9 }>
+              <video src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
+            </Ratio>
 
             <List.Item actions={[ <LikeDislikes video userId={localStorage.getItem('userId')} videoId={videoId} />, subscribeButton ]}>
               <List.Item.Meta
