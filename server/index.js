@@ -52,6 +52,7 @@ if (process.env.NODE_ENV === "production") {
 
   // Set static folder
   // All the javascript and css files will be read and served from this folder
+  // js, css 파일 불러오는 경로
   app.use(express.static("client/build"));
 
   // index.html for all page routes    html or routing and naviagtion
